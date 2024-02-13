@@ -1,0 +1,106 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Custom Search Functionality in LWC" icon-name="standard:account">
+        
+         <div class="slds-float_right slds-box slds-box_xx-small slds-m-right_x-small slds-m-top_small">
+                                <ul class="slds-button-group-list">
+                                    <li>
+                                        <button class="slds-button slds-button_neutral"  onclick={navigateToNewCasePage}> New Case </button>
+                                    </li>
+                                    <li>
+                                        <button class="slds-button slds-button_neutral"  onclick={navigateToNewAccountPage}> New Account</button>
+                                    </li>
+                                    <li>
+                                        <lightning-button variant="success" size="small" label="Priview" icon-name="utility:preview"
+                                            icon-position="right" class="slds-m-left_x-small"></lightning-button>
+                                    </li>
+                                    <li>
+                                        <lightning-button variant="destructive" size="small" label="Delete" title="Delete action" onclick={deleteButtonClick}
+                                            icon-name="utility:delete" icon-position="right" class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </li>
+                                </ul>
+                            </div>
+     <div class="slds-grid slds-wrap">
+        <div class="slds-p-horizontal_medium slds-col slds-size_6-of-12 slds-m-bottom--medium" >
+          <lightning-input type="search" variant="standard" value={accountName} placeholder="Enter Account Name " onchange={searchNameHandler}></lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-12 slds-m-top--medium" style="margin-top: 20px; margin-left: 10px;">
+         <lightning-button label={clickedButtonLabel} title="Show All Account Records" class="slds-m-left_x-small" size="small" variant="brand" onclick={getAccountHandle}  ></lightning-button>
+        </div>
+     </div>
+      <lightning-layout class="slds-m-bottom_medium slds-m-left_medium slds-grid slds-gutters"  >
+          <lightning-layout-Item  if:true={isVisible}>
+            <b><i>Selected Records: <b style="color:red;">{recordsCount}</b></i></b>
+          </lightning-layout-Item>
+      </lightning-layout>
+      <!--Table 1-->
+    <template if:true={data}>
+       <div if:true={isSearchTable1} style="height: 300px;" >
+          <lightning-datatable
+              key-field="id"
+              data={data}
+              columns={columnsList}
+              onrowaction={callRowAction}
+              onrowselection={handleRowSelection}
+             
+              >
+          </lightning-datatable>
+         </div>
+       </template>
+        <!--Table 2-->
+       <template if:true={data}>
+       <div if:true={isButtonTable2} style="height: 300px;" >
+          <lightning-datatable
+              key-field="id"
+              data={data}
+              columns={columnsList}
+              onrowaction={callRowAction}
+              onrowselection={handleRowSelection}
+             
+              >
+          </lightning-datatable>
+         </div>
+       </template>
+    
+          <!-- Modal start -->
+    
+        <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+        <template  if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close"
+                                alternative-text="close"
+                                variant="inverse"
+                                size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Account Record</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium " >
+                         <lightning-record-form
+                               object-api-name="Account"
+                               record-id={recordId}
+                               layout-type="Full"
+                               value={value}
+                               columns="2"  mode="readonly">
+                         </lightning-record-form>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        
+                         <lightning-button variant="brand" label="OK" class="slds-m-left_large slds-align_absolute-center" onclick={closeModal}></lightning-button> 
+                       
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+     
+    </lightning-card>
+     
+    </template>
