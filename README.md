@@ -1,4 +1,4 @@
-1) Look Like this LWC Component of Search Bar With Buttons.
+1) Look like this LWC Component of Search Bar With Buttons.
 
 ![image](https://github.com/amolmeshram31/Search-Bar-With-Data-Table-LWC/assets/156906608/a07e7c7f-c968-4746-b675-06fe106847be)
 
